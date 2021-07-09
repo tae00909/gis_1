@@ -12,6 +12,12 @@
     <div style="margin: 2rem; text-align: center">
         <h1>HTTP METHOD</h1>
 
+{#        이 주소로 보내겠다.#}
+        <form action="/accounts/hello_world/" method="post">
+{#            forma문 안에는 무조건 csrf 해킹을 방기하기 위한 토큰을 무조건 써야한다#}
+            {% csrf_token %}
+            <input type="submit" class="btn btn-outline-dark rounded-pill px-5">
+        </form>
 {#    쌍 중갈호는 일반전은 파이썬 변수 출력 #}
 {#    view에서 가져온 키 -> text#}
     <h3>{{ text }}</h3>
