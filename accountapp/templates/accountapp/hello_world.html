@@ -13,10 +13,12 @@
         }
     </style>
 
-{# 인라인과 인라인 블럭의 차이는 인라인 블럭은 인라인에서 불가능한  너비, 높이, 마진, 패딩 속성 조절 가능  #}
-{# overflow: hideen은 넘어간 내용은 모두 삭제#}
+{# 인라인과 인라인 블럭의 차이는 인라인 블럭은 인라인에서 불가능한  너비, 높이, 마진, 패딩 속성 조절 가능 #}
+{# overflow: hideen은 넘어간 내용은 모두 삭제 #}
 {# 또한 스크롤로도 할 수 있다. #}
-{# 폰트 사이즈 변경시 rem, em 이 변경된다.#}
+{# em과 rem은 font-size에 영향을 미침  #}
+{# em의 모든 부모의 폰트사이즈에 영향을 미친다. #}
+{# 폰트 사이즈 변경시 rem, em 이 변경된다. #}
     <div style="height: 20rem; background-color: aqua; margin: 2rem; border-radius: 1rem; overflow: hidden;
     font-size: 2rem; ">
         <h1>test</h1>
