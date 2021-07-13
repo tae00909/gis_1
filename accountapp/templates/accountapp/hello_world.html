@@ -16,11 +16,14 @@
         <form action="/accounts/hello_world/" method="post">
 {#            forma문 안에는 무조건 csrf 해킹을 방기하기 위한 토큰을 무조건 써야한다#}
             {% csrf_token %}
+{#            데이터를 가져오기 위해서 라벨링을 해줘야한다. -> name 소것ㅇ#}
+            <input type="text" name="input_text">
             <input type="submit" class="btn btn-outline-dark rounded-pill px-5">
         </form>
 {#    쌍 중갈호는 일반전은 파이썬 변수 출력 #}
 {#    view에서 가져온 키 -> text#}
-    <h3>{{ text }}</h3>
+{#        model_instance만 적으면 안되고 그 안의 text를 쓰기 때문에 text를 붙여줘야함 #}
+    <h3>{{ model_instance.text }}</h3>
 
     </div>
 
