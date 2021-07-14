@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{# text-center, m-5는 부트스트랩에서 제공해주는 것이다.#}
+{#    text-center은 중앙정렬, m-5는 마진 5#}
+    <div class="text-center">
+        <div class="m-5">
+            <h4>Sign Up</h4>
+        </div>
+        <div>
+            <form action="{% url 'accountapp:create' %}" method="post">
+                {% csrf_token %}
+{#                라벨링를 안해도 UserCreationForm의 form 출력해줌#}
+                {{ form }}
+                <div class="m-5">
+                    <input type="submit" class="btn btn-dark rounded-pill px-5">
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
