@@ -1,7 +1,7 @@
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 
-from accountapp.views import hello_world, AccountCreateView
+from accountapp.views import hello_world, AccountCreateView, AccountDetailView
 
 app_name = 'accountapp'
 
@@ -15,5 +15,7 @@ urlpatterns = [
     path('logout/',LogoutView.as_view(), name='logout'),
 
     # AccountCreateView는 클래스이기 때문에 as_view를 추가
-    path('create/', AccountCreateView.as_view(), name='create')
+    path('create/', AccountCreateView.as_view(), name='create'),
+    # <int:pk> pk라는 이름의 숫자를 받는다. -> primary key 약자 이 고유값을 통해서 어떤 account를 받아올지
+     path('detail/<int:pk>', AccountDetailView.as_view(), name='detail'),
 ]
