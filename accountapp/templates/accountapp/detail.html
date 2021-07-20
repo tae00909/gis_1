@@ -12,6 +12,11 @@
 {#           언제 가입햇는지 #}
             {{ target_user.date_joined }}
         </div>
+        <div>
+            <a href="{% url 'accountapp:update' pk=target_user.pk %}">
+                Update Info
+            </a>
+        </div>
     </div>
 
 

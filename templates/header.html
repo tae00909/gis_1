@@ -20,6 +20,7 @@
         </span>
         {% else %}
         <span>
+{#        target_user가 아니라 user이다#}
             <a href="{% url 'accountapp:detail' pk=user.pk %}">
                 MyPage
             </a>
