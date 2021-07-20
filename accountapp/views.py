@@ -9,6 +9,7 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 
+from accountapp.forms import AccountCreationForm
 from accountapp.models import NewModel
 
 
@@ -37,7 +38,7 @@ def hello_world(request):
 #C
 class AccountCreateView(CreateView):
     model = User
-    form_class = UserCreationForm
+    form_class = UserCreationForm # 장고에서 제공해주는 회원가입 폼
     success_url = reverse_lazy('accountapp:hello_world')
     template_name = 'accountapp/create.html'
 
@@ -49,7 +50,7 @@ class AccountDetailView(DetailView):
 #U
 class AccountUpdateView(UpdateView):
     model = User
-    form_class = UserCreationForm
+    form_class = AccountCreationForm
     context_object_name = 'target_user'
     success_url = reverse_lazy('accountapp:hello_world') # url 성공시 어디로 이동
     template_name = 'accountapp/update.html'
