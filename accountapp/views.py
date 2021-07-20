@@ -7,7 +7,7 @@ from django.shortcuts import render
 
 # request에 요청관련 메서드가 다 들어가 있다
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 
 from accountapp.models import NewModel
 
@@ -34,22 +34,29 @@ def hello_world(request):
         data_list = NewModel.objects.all()
         return render(request, 'accountapp/hello_world.html',
                       context={'data_list': data_list})
-
+#C
 class AccountCreateView(CreateView):
     model = User
     form_class = UserCreationForm
     success_url = reverse_lazy('accountapp:hello_world')
     template_name = 'accountapp/create.html'
 
+#R
 class AccountDetailView(DetailView):
     model = User
-    context_object_name = 'target_user'
+    context_object_name = 'target_user' # 해당 객체에 어떻게 접근할 것인지
     template_name = 'accountapp/detail.html'
-
+#U
 class AccountUpdateView(UpdateView):
     model = User
     form_class = UserCreationForm
     context_object_name = 'target_user'
-    success_url = reverse_lazy('accountapp:hello_world')
+    success_url = reverse_lazy('accountapp:hello_world') # url 성공시 어디로 이동
     template_name = 'accountapp/update.html'
 
+#D
+class AccountDeleteView(DeleteView):
+    model = User
+    context_object_name = 'target_user'
+    success_url = reverse_lazy('accountapp:hello_world')
+    template_name = 'accountapp/delete.html'
