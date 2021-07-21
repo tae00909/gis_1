@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render
 
 # Create your views here.
@@ -48,7 +48,7 @@ class AccountCreateView(CreateView):
     success_url = reverse_lazy('accountapp:hello_world')
     template_name = 'accountapp/create.html'
 
-#R
+#R?
 class AccountDetailView(DetailView):
     model = User
     context_object_name = 'target_user' # 해당 객체에 어떻게 접근할 것인지
@@ -62,18 +62,19 @@ class AccountUpdateView(UpdateView):
     template_name = 'accountapp/update.html'
 
     def get(self, request, *args, **kwargs):
-        # 로그인이 되어있다면 get 함수를 사용
-        if request.user.is_authenticated:
+        # 로그인이 되어있다면 get 함수를 사용 and get_object를 사용해 target_user를 가져올 수 있음
+        if request.user.is_authenticated and self.get_object() == request.user:
             return super().get(request, *args, **kwargs)
         else:
-            return HttpResponseRedirect(reverse('accountapp:login'))
+            # HttpResponseForbidden -> 금지된 경로로 접근했다라는 경고가 뜸
+            return HttpResponseForbidden()
 
     def post(self, request, *args, **kwargs):
         # 로그인이 되어있다면 post 함수를 사용
-        if request.user.is_authenticated:
+        if request.user.is_authenticated and self.get_object() == request.user:
             return super().post(request, *args, **kwargs)
         else:
-            return HttpResponseRedirect(reverse('accountapp:login'))
+            return HttpResponseForbidden()
 
 #D
 class AccountDeleteView(DeleteView):
@@ -83,15 +84,16 @@ class AccountDeleteView(DeleteView):
     template_name = 'accountapp/delete.html'
 
     def get(self, request, *args, **kwargs):
-        # 로그인이 되어있다면 get 함수를 사용
-        if request.user.is_authenticated:
+        # 로그인이 되어있다면 get 함수를 사용 and get_object를 사용해 target_user를 가져올 수 있음
+        if request.user.is_authenticated and self.get_object() == request.user:
             return super().get(request, *args, **kwargs)
         else:
-            return HttpResponseRedirect(reverse('accountapp:login'))
+            # HttpResponseForbidden -> 금지된 경로로 접근했다라는 경고가 뜸
+            return HttpResponseForbidden()
 
     def post(self, request, *args, **kwargs):
         # 로그인이 되어있다면 post 함수를 사용
-        if request.user.is_authenticated:
+        if request.user.is_authenticated and self.get_object() == request.user:
             return super().post(request, *args, **kwargs)
         else:
-            return HttpResponseRedirect(reverse('accountapp:login'))
+            return HttpResponseForbidden()
