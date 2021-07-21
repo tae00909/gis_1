@@ -76,7 +76,7 @@ class AccountUpdateView(UpdateView):
         else:
             return HttpResponseForbidden()
 
-#D
+#D  
 class AccountDeleteView(DeleteView):
     model = User
     context_object_name = 'target_user'
