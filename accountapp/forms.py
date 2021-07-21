@@ -7,3 +7,4 @@ class AccountCreationForm(UserCreationForm):
         super().__init__(*args, **kwargs) # 그대로 받아온다.
 
         self.fields['username'].disabled = True
+

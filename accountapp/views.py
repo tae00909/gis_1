@@ -14,27 +14,33 @@ from accountapp.models import NewModel
 
 
 def hello_world(request):
-    if request.method == "POST":
-
-        temp = request.POST.get('input_text')
-        # 데이터베이스에 데이터를 저장해줘야하기 때문에 model에 데이터를 전송해주겟다.
-        # NewModel 클래스르 받은 객체 -> model_instance
-        model_instance = NewModel()
-        model_instance.text = temp
-        model_instance.save()
-
-        # newmodel 데이터 베이스의 오브젝트의 모든 데이터를 가져오겠다는 뜻
-        data_list = NewModel.objects.all()
-
-        # Redirect(재연결) -> 어디로 제연결?? ->
-        # 주소가 길어질때
-        # app_name = 'accountapp'을 설정한 적 있다.
-        # 그리고 name='hello_world' 네이밍 해준적 있다.
-        return HttpResponseRedirect(reverse('accountapp:hello_world'))
+    # 요청 보낸 유저가 로그인되어있다면
+    if request.user.is_authenticated:
+        if request.method == "POST":
+    
+            temp = request.POST.get('input_text')
+            # 데이터베이스에 데이터를 저장해줘야하기 때문에 model에 데이터를 전송해주겟다.
+            # NewModel 클래스르 받은 객체 -> model_instance
+            model_instance = NewModel()
+            model_instance.text = temp
+            model_instance.save()
+    
+            # newmodel 데이터 베이스의 오브젝트의 모든 데이터를 가져오겠다는 뜻
+            data_list = NewModel.objects.all()
+    
+            # Redirect(재연결) -> 어디로 제연결?? ->
+            # 주소가 길어질때
+            # app_name = 'accountapp'을 설정한 적 있다.
+            # 그리고 name='hello_world' 네이밍 해준적 있다.
+            return HttpResponseRedirect(reverse('accountapp:hello_world'))
+        else:
+            data_list = NewModel.objects.all()
+            return render(request, 'accountapp/hello_world.html',
+                          context={'data_list': data_list})
     else:
-        data_list = NewModel.objects.all()
-        return render(request, 'accountapp/hello_world.html',
-                      context={'data_list': data_list})
+        # 로그인 안되어있으니 로그인 페이지로 이동
+        return HttpResponseRedirect(reverse('accountapp:login'))
+
 #C
 class AccountCreateView(CreateView):
     model = User
@@ -55,9 +61,37 @@ class AccountUpdateView(UpdateView):
     success_url = reverse_lazy('accountapp:hello_world') # url 성공시 어디로 이동
     template_name = 'accountapp/update.html'
 
+    def get(self, request, *args, **kwargs):
+        # 로그인이 되어있다면 get 함수를 사용
+        if request.user.is_authenticated:
+            return super().get(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect(reverse('accountapp:login'))
+
+    def post(self, request, *args, **kwargs):
+        # 로그인이 되어있다면 post 함수를 사용
+        if request.user.is_authenticated:
+            return super().post(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect(reverse('accountapp:login'))
+
 #D
 class AccountDeleteView(DeleteView):
     model = User
     context_object_name = 'target_user'
     success_url = reverse_lazy('accountapp:hello_world')
     template_name = 'accountapp/delete.html'
+
+    def get(self, request, *args, **kwargs):
+        # 로그인이 되어있다면 get 함수를 사용
+        if request.user.is_authenticated:
+            return super().get(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect(reverse('accountapp:login'))
+
+    def post(self, request, *args, **kwargs):
+        # 로그인이 되어있다면 post 함수를 사용
+        if request.user.is_authenticated:
+            return super().post(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect(reverse('accountapp:login'))
