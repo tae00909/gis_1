@@ -11,6 +11,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 
+from accountapp.decorators import account_ownership_required
 from accountapp.forms import AccountCreationForm
 from accountapp.models import NewModel
 
@@ -53,11 +54,15 @@ class AccountDetailView(DetailView):
     context_object_name = 'target_user' # 해당 객체에 어떻게 접근할 것인지
     template_name = 'accountapp/detail.html'
 
+
+has_ownership = [login_required, account_ownership_required]
+
+
 #U
 # 장고에서 제공해주는 데코레이터 -> 메서드를 변환해준다.
 # login_required는 함수를 위한 것인데 메서드를 위한것으로 변환
-@method_decorator(login_required, 'get') # get 방식
-@method_decorator(login_required, 'post') # post 방식
+@method_decorator(has_ownership, 'get') # get 방식
+@method_decorator(has_ownership, 'post') # post 방식
 class AccountUpdateView(UpdateView):
     model = User
     form_class = AccountCreationForm
@@ -67,8 +72,8 @@ class AccountUpdateView(UpdateView):
 
 
 #D
-@method_decorator(login_required, 'get') # get 방식
-@method_decorator(login_required, 'post') # post 방식
+@method_decorator(has_ownership, 'get') # get 방식
+@method_decorator(has_ownership, 'post') # post 방식
 class AccountDeleteView(DeleteView):
     model = User
     context_object_name = 'target_user'
