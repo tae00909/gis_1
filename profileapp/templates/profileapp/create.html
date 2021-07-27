@@ -9,7 +9,11 @@
             <h4>Create Profile</h4>
         </div>
         <div>
-            <form action="{% url 'profileapp:create' %}" method="post">
+            <form action="{% url 'profileapp:create' %}"
+{#                인코딩 타입를 적어줘야 파일을 보내줄 수 있다. #}
+{#                 사진은 문자가 아니고 파일이기때문에 인코딩해줘야한다.#}
+                  enctype="multipart/form-data"
+                  method="post">
                 {% csrf_token %}
                 {% bootstrap_form form %}
                 <div class="m-5">
