@@ -28,21 +28,19 @@
             </h2>
             {% endif %}
         </div>
-        <div>
-{#           언제 가입햇는지 #}
-            {{ target_user.date_joined }}
-        </div>
+
 {#         요청을 보내는 유저와 account의 user와 같다면#}
         {% if user == target_user %}
 
         <div>
-            <a href="{% url 'accountapp:update' pk=target_user.pk %}">
-                Update Info
+            <a href="{% url 'accountapp:update' pk=target_user.pk %}"
+            class="material-icons round_button mx-1">
+                settings
             </a>
-        </div>
-        <div>
-            <a href="{% url 'accountapp:delete' pk=target_user.pk %}">
-                Quit
+
+            <a href="{% url 'accountapp:delete' pk=target_user.pk %}"
+            class="material-icons round_button mx-1">
+                close
             </a>
         </div>
         {% endif %}
