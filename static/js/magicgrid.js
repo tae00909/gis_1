@@ -282,6 +282,8 @@ let magicGrid = new MagicGrid({
   useMin: true
 });
 
+magicGrid.listen();
+
 // document는 현재 list의 모든 html
 // 모든 img 태그들을 찾겠다.
 var masonrys = document.getElementsByTagName("img")
@@ -294,5 +296,3 @@ for (let i=0; masonrys.length; i++) {
     magicGrid.positionItems();
   }, false)
 }
-
-magicGrid.listen();
