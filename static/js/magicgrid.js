@@ -282,4 +282,17 @@ let magicGrid = new MagicGrid({
   useMin: true
 });
 
+// document는 현재 list의 모든 html
+// 모든 img 태그들을 찾겠다.
+var masonrys = document.getElementsByTagName("img")
+
+for (let i=0; masonrys.length; i++) {
+  // 이벤트 리스너: 어떤 이벤트가 일어나는지 감지-> 어떤 이벤트가 일어났을 때 무엇을 하라
+  // 이미지가 로드 되었을 때 function () 실행
+  masonrys[i].addEventListener('load', function () {
+    // magicGrid의 메서드인 positionItems(재배치)
+    magicGrid.positionItems();
+  }, false)
+}
+
 magicGrid.listen();
