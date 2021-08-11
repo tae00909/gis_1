@@ -39,6 +39,35 @@
         <div class="text-center my-4">
             {#      댓글 내용, 댓글 작성창     #}
 
+            {#      이 게시글에 연결된 댓글만 가져와야함      #}
+            {#      comment 모델에 related_name을 comment로 해놔서 target_article.comment이 가능      #}
+            {#      1대1이 아니라 1대다 라서 all로 다 가져온다.      #}
+            {% for comment in target_article.comment.all %}
+
+                <div class="comment_box">
+                    <div>
+                        <span class="NNS_B" style="font-size: 1.3rem;">
+                            {{ comment.writer.profile.nickname }}
+                        </span>
+                        <span>{{ comment.created_at }}</span>
+                    </div>
+                    <div>
+                        <p>
+                            {{ comment.content }}
+                        </p>
+                    </div>
+                    {% if comment.writer == user %}
+                    <div style="text-align: right">
+                        <a href="{% url 'commentapp:delete' pk=comment.pk %}"
+                            class="btn btn-danger rounded-pill px-5">
+                            Delete
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+
+            {% endfor %}
+
             {% include 'commentapp/create.html' %}
 
         </div>
