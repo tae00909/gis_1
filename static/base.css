@@ -64,3 +64,12 @@
     padding: 1rem;
     margin: 1rem;
 }
+
+/* css에서 media 정보를 얻을 수 있음*/
+/* media 쿼리를 이용해 기기의 스크린 정보를 얻음*/
+@media screen and (max-width: 500px) {
+    html {
+        /* default font-size = 16px */
+        font-size: 13px;
+    }
+}
