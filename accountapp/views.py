@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic.list import MultipleObjectMixin
 
 from accountapp.decorators import account_ownership_required
 from accountapp.forms import AccountCreationForm
@@ -17,6 +18,9 @@ from accountapp.models import NewModel
 
 # 장고에서 제공해주는 데코레이터
 # login_url -> 로그인 위치의 경로 ('account/login 이면 설정안해줘도 된다)
+from articleapp.models import Article
+
+
 @login_required(login_url=reverse_lazy('accountapp:login'))
 def hello_world(request):
     if request.method == "POST":
@@ -49,11 +53,17 @@ class AccountCreateView(CreateView):
     template_name = 'accountapp/create.html'
 
 #R?
-class AccountDetailView(DetailView):
+class AccountDetailView(DetailView, MultipleObjectMixin):
     model = User
     context_object_name = 'target_user' # 해당 객체에 어떻게 접근할 것인지
     template_name = 'accountapp/detail.html'
 
+    paginate_by = 20
+
+    def get_context_data(self, **kwargs):
+        # 작성자가 작성한 글을 가져오기 위해
+        article_list = Article.objects.filter(writer=self.object)
+        return super().get_context_data(object_list=article_list, **kwargs)
 
 has_ownership = [login_required, account_ownership_required]
 
