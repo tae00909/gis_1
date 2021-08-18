@@ -17,5 +17,10 @@
 
     </div>
 
+    <div>
+        {#    article_list를 object_list로 할당    #}
+        {#    list_fragment안에 article_list를 object_list로 바꿔줌    #}
+        {% include 'snippets/list_fragment.html' with article_list=object_list %}
+    </div>
 
 {% endblock %}

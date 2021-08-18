@@ -1,0 +1,56 @@
+{% load static %}
+
+    <style>
+        .container {
+            padding: 0;
+            margin: 0 auto;
+        }
+
+        .container div {
+            width: 45%;
+            max-width: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 1rem;
+            flex-direction: column;
+            box-shadow: 0 0 1rem #e7e4e4;
+        }
+
+        .container img {
+            width: 100%;
+            border-radius: 1rem;
+        }
+
+    </style>
+
+    <div class="container my-4">
+        {# article_list는 article 객체의 project에 해당하는 것만 추출해야함 #}
+        {#  view에서 get_context_data를 사용하여 뽑아온다.  #}
+        {% for article in article_list %}
+
+            <div>
+                <a href="{% url 'articleapp:detail' pk=article.pk%}">
+                    <img src="{{ article.image.url }}" alt="">
+                </a>
+                <span class="my-1 NNS_B">{{ article.title }}</span>
+            </div>
+
+        {% endfor %}
+    </div>
+
+    <script src="{% static 'js/magicgrid.js' %}"></script>
+
+
+    {% include 'snippets/pagination.html' %}
+
+    <div class="text-center my-5">
+        <a href="{% url 'articleapp:create' %}"
+        class="btn btn-dark rounded-pill material-icons">
+            brush
+        </a>
+        <a href="{% url 'articleapp:create' %}"
+        class="btn btn-outline-dark rounded-pill px-5">
+            Create Article
+        </a>
+    </div>
