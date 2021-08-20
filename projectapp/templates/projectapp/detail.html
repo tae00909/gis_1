@@ -18,10 +18,19 @@
     </div>
 
     <div class="text-center">
-        <a href="{% url 'subscribeapp:subscribe' project_pk=target_project.pk %}"
-            class="btn btn-primary rounded-pill px-5">
-            Subscribe
-        </a>
+        {% if user.is_authenticated %}
+            {% if not subscription %}
+                <a href="{% url 'subscribeapp:subscribe' project_pk=target_project.pk %}"
+                   class="btn btn-primary rounded-pill px-5">
+                    Subscribe
+                </a>
+            {% else %}
+                <a href="{% url 'subscribeapp:subscribe' project_pk=target_project.pk %}"
+                   class="btn btn-secondary rounded-pill px-5">
+                    UnSubscribe
+                </a>
+            {% endif %}
+        {% endif %}
     </div>
 
     <div>
