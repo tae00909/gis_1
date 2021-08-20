@@ -17,6 +17,13 @@
 
     </div>
 
+    <div class="text-center">
+        <a href="{% url 'subscribeapp:subscribe' project_pk=target_project.pk %}"
+            class="btn btn-primary rounded-pill px-5">
+            Subscribe
+        </a>
+    </div>
+
     <div>
         {#    article_list를 object_list로 할당    #}
         {#    list_fragment안에 article_list를 object_list로 바꿔줌    #}
