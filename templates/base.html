@@ -9,6 +9,15 @@
 
 <hr>
 
+{# messages: 장고에서 기본적으로 제공한느 객체 #}
+{% for message in messages %}
+    <div class="text-center">
+        <div class="btn btn-success rounded-pill px-5">
+            {{ message }}
+        </div>
+    </div>
+{% endfor %}
+
 {% block content %}
 {% endblock %}
 
