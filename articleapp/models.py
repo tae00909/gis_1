@@ -21,3 +21,5 @@ class Article(models.Model):
 
     # auto_now_add=True -> db에서 정보가 생성될때 시간을 찍어줌
     created_at = models.DateField(auto_now_add=True, null=True)
+
+    like = models.IntegerField(default=0)
