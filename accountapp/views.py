@@ -21,35 +21,35 @@ from accountapp.models import NewModel
 from articleapp.models import Article
 
 
-@login_required(login_url=reverse_lazy('accountapp:login'))
-def hello_world(request):
-    if request.method == "POST":
-
-        temp = request.POST.get('input_text')
-        # 데이터베이스에 데이터를 저장해줘야하기 때문에 model에 데이터를 전송해주겟다.
-        # NewModel 클래스르 받은 객체 -> model_instance
-        model_instance = NewModel()
-        model_instance.text = temp
-        model_instance.save()
-
-        # newmodel 데이터 베이스의 오브젝트의 모든 데이터를 가져오겠다는 뜻
-        data_list = NewModel.objects.all()
-
-        # Redirect(재연결) -> 어디로 제연결?? ->
-        # 주소가 길어질때
-        # app_name = 'accountapp'을 설정한 적 있다.
-        # 그리고 name='hello_world' 네이밍 해준적 있다.
-        return HttpResponseRedirect(reverse('accountapp:hello_world'))
-    else:
-        data_list = NewModel.objects.all()
-        return render(request, 'accountapp/hello_world.html',
-                      context={'data_list': data_list})
+# @login_required(login_url=reverse_lazy('accountapp:login'))
+# def hello_world(request):
+#     if request.method == "POST":
+#
+#         temp = request.POST.get('input_text')
+#         # 데이터베이스에 데이터를 저장해줘야하기 때문에 model에 데이터를 전송해주겟다.
+#         # NewModel 클래스르 받은 객체 -> model_instance
+#         model_instance = NewModel()
+#         model_instance.text = temp
+#         model_instance.save()
+#
+#         # newmodel 데이터 베이스의 오브젝트의 모든 데이터를 가져오겠다는 뜻
+#         data_list = NewModel.objects.all()
+#
+#         # Redirect(재연결) -> 어디로 제연결?? ->
+#         # 주소가 길어질때
+#         # app_name = 'accountapp'을 설정한 적 있다.
+#         # 그리고 name='hello_world' 네이밍 해준적 있다.
+#         return HttpResponseRedirect(reverse('accountapp:hello_world'))
+#     else:
+#         data_list = NewModel.objects.all()
+#         return render(request, 'accountapp/hello_world.html',
+#                       context={'data_list': data_list})
 
 #C
 class AccountCreateView(CreateView):
     model = User
     form_class = UserCreationForm # 장고에서 제공해주는 회원가입 폼
-    success_url = reverse_lazy('accountapp:hello_world')
+    success_url = reverse_lazy('articleapp:list')
     template_name = 'accountapp/create.html'
 
 #R?
@@ -88,5 +88,5 @@ class AccountUpdateView(UpdateView):
 class AccountDeleteView(DeleteView):
     model = User
     context_object_name = 'target_user'
-    success_url = reverse_lazy('accountapp:hello_world')
+    success_url = reverse_lazy('articleapp:list')
     template_name = 'accountapp/delete.html'
