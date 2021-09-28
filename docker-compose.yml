@@ -14,7 +14,7 @@ services:
       - gis_media:/data/media/
 
   django:
-    image: gis_1:7
+    image: gis_1:8
     networks:
       - gis_1_network
     volumes:
